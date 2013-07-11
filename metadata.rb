@@ -9,6 +9,7 @@ recipe            "mysql", "Includes the client recipe to configure a client"
 recipe            "mysql::client", "Installs packages required for mysql clients using run_action magic"
 recipe            "mysql::server", "Installs packages required for mysql servers w/o manual intervention"
 recipe            "mysql::server_ec2", "Performs EC2-specific mountpoint manipulation"
+recipe            "mysql::firewall", "Opens the local firewall on the instance if in use"
 
 %w{ debian ubuntu centos suse fedora redhat scientific amazon freebsd windows mac_os_x }.each do |os|
   supports os
@@ -16,6 +17,7 @@ end
 
 depends "openssl"
 depends "build-essential", "> 1.1.0"
+depends "firewall"
 suggests "homebrew"
 suggests "windows"
 
@@ -138,3 +140,7 @@ attribute "mysql/client/bin_dir",
 attribute "mysql/client/ruby_dir",
   :display_name => "Ruby Executable Directory which should gain MySQL support",
   :default => "system ruby"
+
+attribute "mysql/firewall/interface",
+  :display_name => "Interface to open the port on",
+  :default => "eth0"
