@@ -41,6 +41,17 @@ suites:
   run_list:
   - recipe[mysql::ruby]
   attributes: {}
+- name: firewall
+  excludes:
+  - centos-5.9
+  - centos-6.4
+  run_list:
+  - recipe[mysql::firewall]
+  attributes:
+    mysql:
+      server_root_password: root&pass
+      server_debian_password: deb&pass
+      server_repl_password: repl&pass
 - name: server
   run_list:
   - recipe[minitest-handler]
